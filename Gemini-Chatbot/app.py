@@ -1,8 +1,5 @@
 import streamlit as st
 from dotenv import load_dotenv
-#from google.cloud import texttospeech
-from pydub import AudioSegment
-from pydub.playback import play
 from google.generativeai import GenerativeModel
 import google.generativeai as genai
 from google.cloud import texttospeech
@@ -10,7 +7,6 @@ import os
 from PIL import Image
 import gtts
 from playsound import playsound
-import pygame
 import multiprocessing
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -54,26 +50,41 @@ def input_image_setup(uploaded_file):
     else:
         raise FileNotFoundError("No file uploaded")
 
+
 ##############################################################3
 # Function to convert speech to text
 def speech_to_text():
-    with sr.Microphone() as source:
-        print("Speak now...")
-        audio = r.listen(source)
+    #import speech_recognition as sr
 
-    try:
-        text = r.recognize_google(audio)
-        print("You said: {}".format(text))
-        return text
-    except:
-        print("Sorry, I didn't catch that.")
-        return None
+ # Create a Recognizer object
+ r = sr.Recognizer()
+
+ # Create a Microphone object to capture audio
+ mic = sr.Microphone()
+
+ # Set the threshold for the recognizer
+ r.energy_threshold = 400
+
+ # Start recording audio from the microphone
+ with mic as source:
+    print("Speak now!")
+    audio = r.record(source, duration=5)
+
+ # Recognize the audio and print the transcription
+ try:
+    # Use the recognizer to recognize the audio
+     text = r.recognize_google(audio)
+     print(text)
+ except sr.RequestError:
+     print("Could not request results from Google Speech Recognition service")
+ except sr.UnknownValueError:
+     print("Unknown error occurred")
 ################################################################
 
 #chat applications
 def ChatGPT():
     prompt1 = st.chat_input("You can ask anything")
-    V_input = st.button("Voice")
+    V_input = st.button("Voice")         # Audio input is inactive due to some prob
     V_enable = st.checkbox('Enable Voice')
     input_prompt = """
                    You are better then chatGPT. You are an expert in chatting like human. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is the team leader of google AI expert engineers those developed you. He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between philosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
@@ -109,6 +120,7 @@ def ChatGPT():
             p.start()
     elif V_input:
         text = speech_to_text()
+        st.balloons()
         with st.spinner(text='Wait...I am responding you.'):
             response = get_gemini_response_t(input_prompt,text)
         if response:
@@ -140,7 +152,7 @@ def text_proc():
             af=t_2_s(response)
             
 def MP_LR():
-    prompt = st.text_input("You can ask anything")
+    prompt = st.text_input("Here You can ask anything related to MP Land Record:")
     input_prompt = """
                    You are an expert in understanding Madhya pradesh Land Record. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
@@ -155,7 +167,7 @@ def MP_LR():
             af=t_2_s(response)
             
 def Health_Expert():
-    prompt = st.text_input("You can ask anything")
+    prompt = st.text_input("Here You can ask anything related to Health.")
     input_prompt = """
                    You are a Health expert. Expert in understanding medical science, human decies etc.Your each and every answer would be related to medical science. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
@@ -170,7 +182,7 @@ def Health_Expert():
             af=t_2_s(response)
             
 def Philosophy_Expert():
-    prompt = st.text_input("You can ask anything")
+    prompt = st.text_input("Here You can ask anything related to Philosophy")
     input_prompt = """
                    You are a philosophy expert. Expert in making a corelation of any event to philosophy and quantum world.Your each and every answer would be related to philosophy and quantum science and explaination would be regarding to Ramendra using very simple and easily understandable words. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
@@ -185,26 +197,32 @@ def Philosophy_Expert():
             af=t_2_s(response)
              
 def image_proc():
-    prompt = st.text_input("Tell me about the image")
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "pdf"])
-    image = ""
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Image.", use_column_width=True)
-
-    input_prompt = """
-                   You are an expert in understanding invoices.
-                   You will receive input images as invoices &
-                   you will have to answer questions based on the input image
-                   """
-
+    prompt = st.text_input("Here you can ask anything about uploaded image")
+    with st.sidebar:
+         #prompt = st.text_input("Ask anything about the image")  
+         uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "pdf"])
+         image = ""
+         if uploaded_file is not None:
+                image = Image.open(uploaded_file)
+                st.image(image, caption="Uploaded Image.", use_column_width=True)
+            
+    input_prompt1 = """
+                     You are an expert in understanding invoices.
+                     You will receive input images as invoices &
+                     you will have to answer questions based on the input image
+                    """
+    input_prompt2 = """
+                     You are an expert in understanding images patterns.
+                     You will receive input images &
+                     you will have to answer questions based on the input image
+                    """
     if prompt:
         with st.spinner(text='Wait...I am responding you.'):
-            image_data = input_image_setup(uploaded_file)
-            response = get_gemini_response_i(input_prompt, image_data, prompt)
-        if response:
-            st.success('Done')
-            st.write(response)
+             image_data = input_image_setup(uploaded_file)
+             response = get_gemini_response_i(input_prompt2, image_data, prompt)
+             if response:
+               st.success('Done')
+               st.write(response)
 
 def t_2_s(response):
 
@@ -220,7 +238,61 @@ def t_2_s(response):
  audio_file = 'response.mp3'
  tts.save(audio_file)
  return audio_file
- 
+
+##########################################################
+def get_pdf_text(pdf_docs):
+    text=""
+    for pdf in pdf_docs:
+        pdf_reader= PdfReader(pdf)
+        for page in pdf_reader.pages:
+            text+= page.extract_text()
+    return  text
+
+def get_text_chunks(text):
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    chunks = text_splitter.split_text(text)
+    return chunks
+
+def get_vector_store(text_chunks):
+    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
+    vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
+    vector_store.save_local("faiss_index")
+
+def get_conversational_chain():
+
+    prompt_template = """
+    Answer the question as detailed as possible from the provided context. If the question is in hindi then reply in hindi, If the question is in English then reply in english , make sure to provide all the details, if the answer is not in
+    provided context, give answer by yourself.\n\n
+    Context:\n {context}?\n
+    Question: \n{question}\n
+
+    Answer:
+    """
+
+    model = ChatGoogleGenerativeAI(model="gemini-pro",
+                             temperature=0.3)
+
+    prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
+    chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
+
+    return chain
+
+def user_input(user_question):
+    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
+    
+    new_db = FAISS.load_local("faiss_index", embeddings)
+    docs = new_db.similarity_search(user_question)
+
+    chain = get_conversational_chain()
+
+    
+    response = chain(
+        {"input_documents":docs, "question": user_question}
+        , return_only_outputs=True)
+
+    print(response)
+    st.write(response["output_text"])
+########################################################## 
 def ChatPdf():
     
     def get_pdf_text(pdf_docs):
@@ -247,7 +319,7 @@ def ChatPdf():
      Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
      provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
      Context:\n {context}?\n
-     Question: \n{question}\n
+     Question:\n{question}\n
 
      Answer:
      """
@@ -266,26 +338,27 @@ def ChatPdf():
      new_db = FAISS.load_local("faiss_index", embeddings)
      docs = new_db.similarity_search(user_question)
 
-     chain = get_conversational_chain()
+     chain = get_conversational_chain() 
 
-    
      response = chain(
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
 
      print(response)
-     st.write("Reply: ", response["output_text"])
+     st.write(response["output_text"])
 
     user_question=st.text_input("Ask a question from pdf files.")
+    
     if user_question:
         user_input(user_question)
+    
     with st.sidebar:
         st.title("Menu:")
         pdf_docs=st.file_uploader("Upload your pdf files and click on the submit & process")
-        if st.button("Submit & Process") and user_input is not None:
+        if st.button("Submit & Process") :#and user_input is not None:
             with st.spinner("Processing..."):
-                raw_text=get_pdf_text(pdf_docs)
                 st.balloons()
+                raw_text=get_pdf_text(pdf_docs)
                 text_chunks=get_text_chunks(raw_text)
                 get_vector_store(text_chunks)
                 st.success("Done")
@@ -301,8 +374,7 @@ def main():
         ##initialize our streamlit app
         st.set_page_config(page_title="Q&A Demo.")
         st.subheader("Advanced Artificial Intelligence Brain")
-        st.caption("Developer: RAMENDRA SINGH RAJPUT")
-        
+        st.caption("Developer: Ramendra Singh Rajput")
         chat_type = st.selectbox(
             'Select Application type',
             ('Text Chatbot', 'Image Chatbot','ChatGPT','Chat with pdf files','Application Tracking System','Health Expert','Madhya pradesh Land Record Expert','Philosophy Expert'), index=None)
@@ -312,8 +384,8 @@ def main():
             image_proc()
         elif chat_type == "ChatGPT":
             ChatGPT()           
-        elif chat_type == "Chat with pdf files":
-            ChatPdf()
+        #elif chat_type == "Chat with pdf files":
+            #ChatPdf()
         elif chat_type == "Application Tracking System":
             ATS()
         elif chat_type=="Health Expert":
@@ -322,7 +394,21 @@ def main():
             MP_LR()    
         elif chat_type=="Philosophy Expert":
             Philosophy_Expert()    
-        
+        elif  chat_type == "Chat with pdf files":
+          with st.sidebar:
+           st.title("Menu:")
+           pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
+           if st.button("Submit & Process"):
+            with st.spinner("Processing..."):
+                raw_text = get_pdf_text(pdf_docs)
+                text_chunks = get_text_chunks(raw_text)
+                get_vector_store(text_chunks)
+                st.success("Done")
+          user_question=st.text_input("Ask a question from pdf files.")
+          if user_question:
+            with st.spinner("Processing..."):
+             user_input(user_question)
+             st.success("Done")
     except IOError as e:
         print(f"An error occurred: {e}")
 
