@@ -1,0 +1,128 @@
+import streamlit as st
+from dotenv import load_dotenv
+
+##from google.cloud import texttospeech
+##from pydub import AudioSegment
+##from pydub.playback import play
+from google.generativeai import GenerativeModel
+import google.generativeai as genai
+from google.cloud import texttospeech
+import os
+from PIL import Image
+import gtts
+from playsound import playsound
+#global response
+##Function to load the model and get the response
+def get_gemini_response_t(question):
+    model = GenerativeModel('gemini-pro')
+    response = model.generate_content(question)
+    return response.text
+
+def get_gemini_response_i(input,image,prompt):
+    model = genai.GenerativeModel('gemini-pro-vision')
+    response = model.generate_content([input,image[0],prompt])
+    return response.text
+
+##Function to process the user input images
+def input_image_setup(uploaded_file):
+    # Check if a file has been uploaded
+    if uploaded_file is not None:
+        # Read the file into bytes
+        bytes_data = uploaded_file.getvalue()
+
+        image_parts = [
+            {
+                "mime_type": uploaded_file.type,  # Get the mime type of the uploaded file
+                "data": bytes_data
+            }
+        ]
+        return image_parts
+    else:
+        raise FileNotFoundError("No file uploaded")
+
+#chat applications
+def text_proc():
+    prompt = st.text_input("You can ask anything")
+    #V_enable = st.checkbox('Enable Voice')
+
+    ## If enter button is clicked
+
+    if prompt:
+        with st.spinner(text='Wait...I am responding you.'):
+            response = get_gemini_response_t(prompt)
+        if response:
+            st.success('Done')
+            st.write(response)
+
+def image_proc():
+    prompt = st.text_input("Tell me about the image")
+    # V_enable=st.checkbox('Enable Voice')
+
+    # st.header("Gemini Application")
+    # input=st.text_input("Input Prompt: ",key="input")
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "pdf"])
+    image = ""
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption="Uploaded Image.", use_column_width=True)
+
+    # submit=st.button("Tell me about the image")
+
+    input_prompt = """
+                   You are an expert in understanding invoices.
+                   You will receive input images as invoices &
+                   you will have to answer questions based on the input image
+                   """
+
+    # If ask button is clicked
+
+    # if submit:
+    if prompt:
+        with st.spinner(text='Wait...I am responding you.'):
+            image_data = input_image_setup(uploaded_file)
+            response = get_gemini_response_i(input_prompt, image_data, prompt)
+        if response:
+            st.success('Done')
+            st.write(response)
+
+def t_2_s():
+   
+ # Set the text to be converted to speech
+ #text = "Hello, world! This is a test of the text-to-speech conversion."
+ t=response
+
+ # Select the language for the text to be spoken in
+ language = 'en'
+
+ # Create an instance of the gTTS class
+ tts = gtts.gTTS(text=t, lang=language)
+ 
+ # Save the audio file
+ audio_file = 'response.mp3'
+ tts.save(audio_file)
+
+ # Play the audio file
+ playsound(audio_file)
+
+
+def main():
+    try:
+        load_dotenv()  # take environment variables from .env
+        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+        ##initialize our streamlit app
+        st.set_page_config(page_title="Q&A Demo")
+        st.subheader("Advanced Chat Application")
+        st.caption("Developer: Ramendra singh rajput")
+
+        chat_type = st.selectbox(
+            'Select Chat type',
+            ('Text Chatbot', 'Image Chatbot'), index=None)
+        if chat_type == "Text Chatbot":
+            text_proc()
+        elif chat_type == "Image Chatbot":
+            image_proc()
+    except IOError as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()

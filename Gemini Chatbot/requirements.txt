@@ -1,0 +1,16 @@
+streamlit
+google-generativeai
+python-dotenv
+pdf2image
+PyPDF2
+chromadb
+langchain
+faiss-cpu
+google-cloud
+google-cloud-texttospeech
+gTTS
+playsound
+opencv-python
+pygame
+langchain_google_genai
+speechrecognition

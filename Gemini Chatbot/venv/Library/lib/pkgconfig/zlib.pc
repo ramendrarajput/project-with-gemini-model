@@ -1,0 +1,13 @@
+prefix=D:/My projects/Gemini Chatbot/venv/Library
+exec_prefix=D:/My projects/Gemini Chatbot/venv/Library
+libdir=D:/My projects/Gemini Chatbot/venv/Library/lib
+sharedlibdir=D:/My projects/Gemini Chatbot/venv/Library/lib
+includedir=D:/My projects/Gemini Chatbot/venv/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
