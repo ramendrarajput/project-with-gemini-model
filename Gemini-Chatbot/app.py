@@ -87,7 +87,7 @@ def ChatGPT():
     V_input = st.button("Voice")         # Audio input is inactive due to some prob
     V_enable = st.checkbox('Enable Voice')
     input_prompt = """
-                   You are better then chatGPT. You are an expert in chatting like human. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is the team leader of google AI expert engineers those developed you. He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between philosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   You are better then chatGPT. You are an expert in chatting like human. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is the team leader of google AI expert engineers those developed you. He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between philosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input. Remember neighter you are gemini.
                    """
     
@@ -139,7 +139,7 @@ def check():
 def text_proc():
     prompt = st.text_input("You can ask anything")
     input_prompt = """
-                   You are an expert in chatting like human. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   You are an expert in chatting like human. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
                    """
 
@@ -154,7 +154,7 @@ def text_proc():
 def MP_LR():
     prompt = st.text_input("Here You can ask anything related to MP Land Record:")
     input_prompt = """
-                   You are an expert in understanding Madhya pradesh Land Record. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   You are an expert in understanding Madhya pradesh Land Record. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
                    """
 
@@ -169,7 +169,7 @@ def MP_LR():
 def Health_Expert():
     prompt = st.text_input("Here You can ask anything related to Health.")
     input_prompt = """
-                   You are a Health expert. Expert in understanding medical science, human decies etc.Your each and every answer would be related to medical science. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   You are a Health expert. Expert in understanding medical science, human decies etc.Your each and every answer would be related to medical science. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
                    """
 
@@ -184,7 +184,7 @@ def Health_Expert():
 def Philosophy_Expert():
     prompt = st.text_input("Here You can ask anything related to Philosophy")
     input_prompt = """
-                   You are a philosophy expert. Expert in making a corelation of any event to philosophy and quantum world.Your each and every answer would be related to philosophy and quantum science and explaination would be regarding to Ramendra using very simple and easily understandable words. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   You are a philosophy expert. Expert in making a corelation of any event to philosophy and quantum world.Your each and every answer would be related to philosophy and quantum science and explaination would be regarding to Ramendra using very simple and easily understandable words. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ 
                    you will have to answer questions based on the user input
                    """
 
@@ -261,7 +261,7 @@ def get_vector_store(text_chunks):
 def get_conversational_chain():
 
     prompt_template = """
-    You are an Expert in pdf file reading RAG system. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput . Answer the question as detailed as possible from the provided context. If the question is in hindi then reply in hindi, If the question is in English then reply in english , make sure to provide all the details, if the answer is not in
+    Answer the question as detailed as possible from the provided context. If the question is in hindi then reply in hindi, If the question is in English then reply in english , make sure to provide all the details, if the answer is not in
     provided context, give answer by yourself.\n\n
     Context:\n {context}?\n
     Question: \n{question}\n
@@ -316,7 +316,7 @@ def ChatPdf():
     def get_conversational_chain():
 
      prompt_template = """
-     You are an Expert in pdf file reading RAG system. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput . Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
+     Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
      provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
      Context:\n {context}?\n
      Question:\n{question}\n
@@ -372,9 +372,9 @@ def main():
         genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
         
         ##initialize our streamlit app
-        st.set_page_config(page_title="Advanced Artificial Intelligence Brain")
+        st.set_page_config(page_title="Q&A Demo.")
         st.subheader("Advanced Artificial Intelligence Brain")
-        st.caption("Developer: Ramendra Singh Rajput.....")
+        st.caption("Developer: Ramendra Singh Rajput")
         chat_type = st.selectbox(
             'Select Application type',
             ('Text Chatbot', 'Image Chatbot','ChatGPT','Chat with pdf files','Application Tracking System','Health Expert','Madhya pradesh Land Record Expert','Philosophy Expert'), index=None)
