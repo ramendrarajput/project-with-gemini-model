@@ -374,7 +374,7 @@ def main():
         ##initialize our streamlit app
         st.set_page_config(page_title="Advanced Artificial Intelligence Brain")
         st.subheader("Advanced Artificial Intelligence Brain")
-        st.caption("Developer: Ramendra Singh Rajput")
+        st.caption("Developer: Ramendra Singh Rajput.....")
         chat_type = st.selectbox(
             'Select Application type',
             ('Text Chatbot', 'Image Chatbot','ChatGPT','Chat with pdf files','Application Tracking System','Health Expert','Madhya pradesh Land Record Expert','Philosophy Expert'), index=None)
