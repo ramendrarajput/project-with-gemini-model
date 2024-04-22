@@ -364,7 +364,7 @@ def ChatPdf():
                 st.success("Done")
 
 def ATS():
-    st.warning("Under development...!")
+    st.warning("Under development..............!")
 
 def main():
     try:
