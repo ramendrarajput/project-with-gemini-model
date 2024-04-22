@@ -145,7 +145,7 @@ def text_proc():
 
     if prompt:
         with st.spinner(text='Wait...I am responding you.'):
-            response = get_gemini_response_t(input_prompt,prompt)
+             response = get_gemini_response_t(input_prompt,prompt)
         if response:
             st.success('Done')
             st.write(response)
@@ -364,7 +364,7 @@ def ChatPdf():
                 st.success("Done")
 
 def ATS():
-    st.warning("Under development...!")
+    st.warning("Under development....!")
 
 def main():
     try:
