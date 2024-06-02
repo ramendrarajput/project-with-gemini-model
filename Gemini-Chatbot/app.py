@@ -363,6 +363,21 @@ def ChatPdf():
                 get_vector_store(text_chunks)
                 st.success("Done")
 
+def Dev_Resume():
+    prompt = "Show me your Developers Resume."
+    input_prompt = """
+                   You are a Resume expert. Expert in Resume creating.Here you have to create your developers resume profile his name is Ramendra Singh Rajput. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari since 2015 and have gained greate experience to work with land records, citizence problem solving, land measorment, managing the data of citizence, providing them end to end goverment services in variouse manners. Have gained experience of different different fields work provided by goverment in line order duties. Utilizing this knowledge to develop a powerfull echo system for goverment to help people and solve theire problem in a smart way. He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also working on Health Expert System, Music Expert System projects.He is having google developer profile.His education and qualification is Bachelore of computer application from M.I.M.T. college Narsimhapur(2007-2010),  master of computer application from ShriRam Institue Of Technology and Science(2010 to 2012).Active learner for Machine learning, Deep learning and Generative AI.Keen in making corelation between phylosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   you will have to answer questions based on the user input
+                   """
+
+    if prompt:
+        with st.spinner(text='Wait...I am responding you.'):
+            response = get_gemini_response_t(input_prompt,prompt)
+        if response:
+            st.success('Done')
+            st.write(response)
+            af=t_2_s(response)
+
 def ATS():
     st.warning("Under development.............!")
 
@@ -377,7 +392,7 @@ def main():
         st.caption("Developer: Ramendra Singh Rajput.")
         chat_type = st.selectbox(
             'Select Application type',
-            ('Text Chatbot', 'Image Chatbot','ChatGPT','Chat with pdf files','Application Tracking System','Health Expert','Madhya pradesh Land Record Expert','Philosophy Expert'), index=None)
+            ('Text Chatbot', 'Image Chatbot','ChatGPT','Chat with pdf files','Application Tracking System','Health Expert','Madhya pradesh Land Record Expert','Philosophy Expert','Developer Resume'), index=None)
         if chat_type == "Text Chatbot":
             text_proc()
         elif chat_type == "Image Chatbot":
@@ -393,7 +408,9 @@ def main():
         elif chat_type=="Madhya pradesh Land Record Expert":
             MP_LR()    
         elif chat_type=="Philosophy Expert":
-            Philosophy_Expert()    
+            Philosophy_Expert()
+        elif chat_type=="Developer Resume":
+            Dev_Resume()        
         elif  chat_type == "Chat with pdf files":
           with st.sidebar:
            st.title("Menu:")
