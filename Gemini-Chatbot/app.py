@@ -24,7 +24,7 @@ def get_gemini_response_t(question,prompt):
     return response.text
 
 def get_gemini_response_i(input,image,prompt):
-    model = genai.GenerativeModel('gemini-pro-vision')
+    model = genai.GenerativeModel('gemini-1.5-flash')##('gemini-pro-vision')
     response = model.generate_content([input,image[0],prompt])
     return response.text
 
@@ -313,6 +313,8 @@ def ChatPdf():
      vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
      vector_store.save_local("faiss_index")
 
+    ############################################################################
+    
     def get_conversational_chain():
 
      prompt_template = """
