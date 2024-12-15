@@ -87,8 +87,8 @@ def ChatGPT():
     V_input = st.button("Voice")         # Audio input is inactive due to some prob
     V_enable = st.checkbox('Enable Voice')
     input_prompt = """
-                   You are better then chatGPT. You are an expert in chatting like human. You are trained by Ramendra Singh Rajput, working for Mp govt as a patwari.He is the team leader of google AI expert engineers those developed you. He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between philosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
-                   you will have to answer questions based on the user input. Remember neighter you are gemini.
+                   You are an AI agent of Ramendra. You are an expert in chatting like human and continuouly being trained to perform task like an agent. You are a part of multi model language model, trained and fine-tuned on massive amount of data by Ramendra Singh Rajput, working for Mp govt as a patwari.He is the team leader of google AI expert engineers those developed you. He is an Artificial intelligence expert, Machine learning and Deep learning engineer,also developing Health Expert System, Music Expert System etc.He is having google developer profile.His education and qualification is master of computer application.Machine learning, Deep learning and Generative AI certified developer.Keen in making corelation between philosophy and quantom physics.His email id is ramendra.rajput85@gmail.com, linkedin id is https://www.linkedin.com/in/ramendra-singh-rajput-026a6a22/ , Google developer profile is https://g.dev/ramendrarajput
+                   you will have to answer questions based on the user input and perform the task given to you.
                    """
     
    ## If enter button is clicked
@@ -461,30 +461,31 @@ def main():
         
         ##initialize our streamlit app
         st.set_page_config(page_title="Advanced Artificial Intelligence Brain")
-        st.subheader("Advanced Artificial Intelligence Brain")
-        st.caption("Developer: Ramendra Singh Rajput.")
+        #st.subheader("Advanced Artificial Intelligence Brain")
+        st.subheader("Indian AI Research Lab")
+        st.caption("Developer: Ramendra Singh Rajput")
         chat_type = st.selectbox(
             'Select Application type',
-            ('Text Chatbot', 'Image Chatbot','ChatGPT','Chat with pdf files','Application Tracking System','Health Expert','Madhya pradesh Land Record Expert','Philosophy Expert','Kisan Mitra Chatbot','Developer Resume'), index=None)
-        if chat_type == "Text Chatbot":
+            ('Text Classifier System', 'Image Classifier System','Agentic System','Retrieval Augmented Generation System','Application Tracking System','AI Engineers Recruiter System','Health Expert System','Music Expert System','MPLRC Expert System','Philosophy Expert System','Kisan Mitra Chatbot','Fine-Tune Your Own Model','Developer Resume'), index=None)
+        if chat_type == "Text Classifier System":
             text_proc()
-        elif chat_type == "Image Chatbot":
+        elif chat_type == "Image Classifier System":
             image_proc()
-        elif chat_type == "ChatGPT":
+        elif chat_type == "Agentic System":
             ChatGPT()           
         elif chat_type == "Kisan Mitra Chatbot":
             Kisan_mitra_main()
         elif chat_type == "Application Tracking System":
             ATS()
-        elif chat_type=="Health Expert":
+        elif chat_type=="Health Expert System":
             Health_Expert()
-        elif chat_type=="Madhya pradesh Land Record Expert":
+        elif chat_type=="MPLRC Expert System":
             MP_LR()    
-        elif chat_type=="Philosophy Expert":
+        elif chat_type=="Philosophy Expert System":
             Philosophy_Expert()
         elif chat_type=="Developer Resume":
             Dev_Resume()        
-        elif  chat_type == "Chat with pdf files":
+        elif  chat_type == "Retrieval Augmented Generation System":
           with st.sidebar:
            st.title("Menu:")
            pdf_docs = st.file_uploader("Upload your PDF Files and Click on the Submit & Process Button", accept_multiple_files=True)
@@ -501,6 +502,7 @@ def main():
              st.success("Done")
     except IOError as e:
         print(f"An error occurred: {e}")
+    st.caption("This Lab is for Research purpose only, not for production")
 
 if __name__ == "__main__":
    main()
