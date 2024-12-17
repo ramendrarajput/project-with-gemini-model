@@ -16,6 +16,10 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 import speech_recognition as sr
+import io
+from google.cloud import aiplatform_v1beta1
+from PIL import Image
+
 
 ##Function to load the model and get the response
 def get_gemini_response_t(question,prompt):
@@ -454,6 +458,77 @@ def Kisan_mitra_main():
 def ATS():
     st.warning("Under development.............!")
 
+def Text_2_Image():
+    # Add a text input field for the user to enter the text
+ text = st.text_input("Enter the text you want to generate an image for:")
+
+ # Generate the image from the text
+ if st.button("Generate"):
+    image = get_gemini_response_t(text,prompt="Create an image for given text")
+      # Display the generated image
+    st.image(image, caption="Generated image")
+     # Get the output.
+    output = image.predictions[0].image_bytes.value
+
+     # Convert the output to a PIL Image object.
+    image = Image.open(io.BytesIO(output))
+
+     # Return the image.
+    return image
+
+def Text_2_Image1():
+    # Import the necessary libraries.
+
+ def generate_image_from_text(text, project, model_id):
+     """Generates an image from a text prompt using Google Gemini.
+
+     Args:
+         text: The text prompt to use.
+         project: The Google Cloud project to use.
+         model_id: The ID of the Gemini model to use.
+
+     Returns:
+         The generated image as a PIL Image object.
+     """
+
+     # Create the client.
+     client = aiplatform_v1beta1.PredictionServiceClient()
+
+     # Set the endpoint.
+     endpoint = client.endpoint_path(
+         project=project, location="us-central1", endpoint=model_id
+     )
+
+     # Set the content of the request.
+     content = text.encode("utf-8")
+
+     # Set the HTTP headers.
+     headers = {"Content-Type": "text/plain"}
+
+     # Make the request.
+     response = client.predict(endpoint=endpoint, content=content, headers=headers)
+
+     # Get the output.
+     output = response.predictions[0].image_bytes.value
+
+     # Convert the output to a PIL Image object.
+     image = Image.open(io.BytesIO(output))
+
+     # Return the image.
+     return image
+
+
+ # Set the parameters.
+ text = "A beautiful landscape with a river running through it."
+ project = "YOUR_PROJECT_ID"
+ model_id = "YOUR_MODEL_ID"
+
+ # Generate the image.
+ image = generate_image_from_text(text, project, model_id)
+
+ # Display the image.
+ image.show()
+
 def main():
     try:
         load_dotenv()  # take environment variables from .env
@@ -466,13 +541,15 @@ def main():
         st.caption("Developer: Ramendra Singh Rajput")
         chat_type = st.selectbox(
             'Select Application type',
-            ('Text Classifier System', 'Image Classifier System','Agentic System','Retrieval Augmented Generation System','Application Tracking System','AI Engineers Recruiter System','Health Expert System','Music Expert System','MPLRC Expert System','Philosophy Expert System','Kisan Mitra Chatbot','Fine-Tune Your Own Model','Developer Resume'), index=None)
+            ('Text Classifier System', 'Image Classifier System','Agentic System','Retrieval Augmented Generation System','Text to Image Generator System','Application Tracking System','AI Engineers Recruiter System','Health Expert System','Music Expert System','MPLRC Expert System','Philosophy Expert System','Kisan Mitra Chatbot','Fine-Tune Your Own Model','Developer Resume'), index=None)
         if chat_type == "Text Classifier System":
             text_proc()
         elif chat_type == "Image Classifier System":
             image_proc()
         elif chat_type == "Agentic System":
             ChatGPT()           
+        elif chat_type == "Text to Image Generator System":
+            Text_2_Image()           
         elif chat_type == "Kisan Mitra Chatbot":
             Kisan_mitra_main()
         elif chat_type == "Application Tracking System":
