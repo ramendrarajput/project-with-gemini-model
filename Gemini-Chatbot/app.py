@@ -17,7 +17,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 import speech_recognition as sr
 import io
-from google.cloud import aiplatform_v1beta1
+#from google.cloud import aiplatform_v1beta1
 from PIL import Image
 from vertexai.preview.vision_models import ImageGenerationModel
 
