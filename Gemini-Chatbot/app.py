@@ -19,7 +19,7 @@ import speech_recognition as sr
 import io
 #from google.cloud import aiplatform_v1beta1
 from PIL import Image
-from vertexai.preview.vision_models import ImageGenerationModel
+#from vertexai.preview.vision_models import ImageGenerationModel
 
 
 ##Function to load the model and get the response
