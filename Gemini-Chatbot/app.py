@@ -20,6 +20,7 @@ import io
 #from google.cloud import aiplatform_v1beta1
 from PIL import Image
 #from vertexai.preview.vision_models import ImageGenerationModel
+from huggingface_hub import InferenceClient
 
 
 ##Function to load the model and get the response
@@ -522,6 +523,16 @@ def Text_2_Image1():
         except Exception as e:
             st.error(f"An error occurred: {e}")
 
+def Text_2_Image2():
+    client = InferenceClient("black-forest-labs/FLUX.1-dev", token="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")#"Datou1111/shou_xin", token="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")
+    prompt = st.text_input("Enter your prompt:")
+  # output is a PIL.Image object
+    if st.button("Generate Image"):   
+     with st.spinner(text='Wait...I am generating image'):
+      image = client.text_to_image(prompt)
+      image.show()
+      st.success("Done")
+
 def main():
     try:
         load_dotenv()  # take environment variables from .env
@@ -542,7 +553,7 @@ def main():
         elif chat_type == "Agentic System":
             ChatGPT()           
         elif chat_type == "Text to Image Generator System":
-            Text_2_Image1()           
+            Text_2_Image2()           
         elif chat_type == "Kisan Mitra Chatbot":
             Kisan_mitra_main()
         elif chat_type == "Application Tracking System":
