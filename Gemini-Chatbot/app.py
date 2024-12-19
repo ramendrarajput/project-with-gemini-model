@@ -497,32 +497,6 @@ def Text_2_Image():
 #       except IOError as e:
 #        print(f"Error opening image: {e}")
 
-def Text_2_Image1():
-
- prompt = st.text_input("Enter your prompt:")
-
-    # Add a button to generate the image
- if st.button("Generate Image"):
-        try:
-            # Initialize the model (ensure your API key is set up correctly)
-            genai.configure(api_key="AIzaSyDGWcTTU4sLb3BoYojLkXfrCdaE8gDcIg4")  # Replace with your actual API key
-            
-            model = ImageGenerationModel.from_pretrained("image-generation-text-to-image")
-            response = model.generate_image(prompt)
-
-            # Extract the image content
-            if "predictions" in response and response["predictions"]:
-                output = response["predictions"][0]["image_bytes"]["value"]
-
-                # Convert the image bytes to a displayable format
-                image = Image.open(io.BytesIO(output))
-                st.image(image, caption="Generated Image", use_column_width=True)
-            else:
-                st.error("No image generated. Check your prompt or try again.")
-
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
-
 def Text_2_Image2():
     client = InferenceClient("black-forest-labs/FLUX.1-dev", token="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")#"Datou1111/shou_xin", token="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")
     prompt = st.text_input("Enter your prompt:")
