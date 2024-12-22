@@ -22,7 +22,7 @@ from PIL import Image
 #from vertexai.preview.vision_models import ImageGenerationModel
 from huggingface_hub import InferenceClient
 #from gradio_client import Client
-from diffusers import DiffusionPipeline
+#from diffusers import DiffusionPipeline
 ##Function to load the model and get the response
 def get_gemini_response_t(question,prompt):
     model = GenerativeModel('gemini-pro')
