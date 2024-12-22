@@ -570,6 +570,7 @@ def Image_2_video():
     generator=generator,
 ).images[0]
     image.show()
+
 def main():
     try:
         load_dotenv()  # take environment variables from .env
@@ -592,7 +593,9 @@ def main():
         elif chat_type == "Text to Image Generator System":
             Text_2_Image2()
         elif chat_type == 'Image to Image Overlaping System':
-            Image_2_Image_Overlaping()            
+            Image_2_Image_Overlaping()
+        elif chat_type == 'Image to Video Generator System':
+            Image_2_video()                
         elif chat_type == "Kisan Mitra Chatbot":
             Kisan_mitra_main()
         elif chat_type == "Application Tracking System":
