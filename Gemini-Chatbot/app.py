@@ -21,8 +21,8 @@ import io
 from PIL import Image
 #from vertexai.preview.vision_models import ImageGenerationModel
 from huggingface_hub import InferenceClient
-
-
+from gradio_client import Client
+from diffusers import DiffusionPipeline
 ##Function to load the model and get the response
 def get_gemini_response_t(question,prompt):
     model = GenerativeModel('gemini-pro')
@@ -498,15 +498,94 @@ def Text_2_Image():
 #        print(f"Error opening image: {e}")
 
 def Text_2_Image2():
-    client = InferenceClient("black-forest-labs/FLUX.1-dev", token="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")#"Datou1111/shou_xin", token="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")
+    client = InferenceClient("stabilityai/stable-diffusion-3.5-large",token="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")#"black-forest-labs/FLUX.1-dev", token="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")#"Datou1111/shou_xin", token="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")
     prompt = st.text_input("Enter your prompt:")
   # output is a PIL.Image object
     if st.button("Generate Image"):   
      with st.spinner(text='Wait...I am generating image'):
       image = client.text_to_image(prompt)
+      #print(image)
       image.show()
       st.success("Done")
 
+def Text_2_Image3():
+    client = Client("multimodalart/FLUX.1-merged")
+    prompt = st.text_input("Enter your prompt:")
+    if st.button("Generate Image"):   
+     with st.spinner(text='Wait...I am generating image'):
+        image = client.predict(
+		prompt,
+		seed=0,
+		randomize_seed=True,
+		width=1024,
+		height=1024,
+		guidance_scale=3.5,
+		num_inference_steps=8,
+		api_name="/infer")
+    image.show()      
+
+def Image_2_Image_Overlaping1():
+
+    from diffusers import DiffusionPipeline
+    pipe = DiffusionPipeline.from_pretrained()#"Lykon/absolute-reality-1.6525-inpainting")#("yisol/IDM-VTON")
+    prompt = "Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"
+    with st.sidebar:
+         #prompt = st.text_input("Ask anything about the image")  
+         uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "pdf"])
+         image = ""
+         if uploaded_file is not None:
+                image = Image.open(uploaded_file)
+                st.image(image, caption="Uploaded Image.", use_column_width=True)
+    image = pipe(prompt).images[0]
+
+def Image_2_Image_Overlaping():
+    from diffusers import AutoPipelineForInpainting, DEISMultistepScheduler
+    import torch
+    from diffusers.utils import load_image
+
+    pipe = AutoPipelineForInpainting.from_pretrained('lykon/absolute-reality-1.6525-inpainting', torch_dtype=torch.float16, variant="fp16")
+    pipe.scheduler = DEISMultistepScheduler.from_config(pipe.scheduler.config) 
+    pipe = pipe.to("cuda")
+
+    img_url = "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+    mask_url = "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+
+    image = load_image(img_url)
+    mask_image = load_image(mask_url)
+
+
+    prompt = "a majestic tiger sitting on a park bench"
+
+    generator = torch.manual_seed(33)
+    image = pipe(prompt, image=image, mask_image=mask_image, generator=generator, num_inference_steps=25).images[0]  
+    image.save("./image.png")
+
+
+def Image_2_video():
+    from diffusers import AutoPipelineForInpainting
+    from diffusers.utils import load_image   
+    import torch
+    pipe = AutoPipelineForInpainting.from_pretrained("diffusers/stable-diffusion-xl-1.0-inpainting-0.1", torch_dtype=torch.float16, variant="fp16").to("cuda")
+
+    img_url = "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
+    mask_url = "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo_mask.png"
+
+    image = load_image(img_url).resize((1024, 1024))
+    mask_image = load_image(mask_url).resize((1024, 1024))
+
+    prompt = "a tiger sitting on a park bench"
+    generator = torch.Generator().manual_seed(0)#device="cuda"
+
+    image = pipe(
+    prompt=prompt,
+    image=image,
+    mask_image=mask_image,
+    guidance_scale=8.0,
+    num_inference_steps=5,  # steps between 15 and 30 work well for us
+    strength=0.99,  # make sure to use `strength` below 1.0
+    generator=generator,
+).images[0]
+    image.show()
 def main():
     try:
         load_dotenv()  # take environment variables from .env
@@ -519,7 +598,7 @@ def main():
         st.caption("Developer: Ramendra Singh Rajput")
         chat_type = st.selectbox(
             'Select Application type',
-            ('Text Classifier System', 'Image Classifier System','Agentic System','Retrieval Augmented Generation System','Text to Image Generator System','Application Tracking System','AI Engineers Recruiter System','Health Expert System','Music Expert System','MPLRC Expert System','Philosophy Expert System','Kisan Mitra Chatbot','Fine-Tune Your Own Model','Developer Resume'), index=None)
+            ('Text Classifier System', 'Image Classifier System','Agentic System','Retrieval Augmented Generation System','Text to Image Generator System','Image to Image Overlaping System','Image to Video Generator System','Application Tracking System','AI Engineers Recruiter System','Health Expert System','Music Expert System','MPLRC Expert System','Philosophy Expert System','Kisan Mitra Chatbot','Fine-Tune Your Own Model','Developer Resume'), index=None)
         if chat_type == "Text Classifier System":
             text_proc()
         elif chat_type == "Image Classifier System":
@@ -527,7 +606,9 @@ def main():
         elif chat_type == "Agentic System":
             ChatGPT()           
         elif chat_type == "Text to Image Generator System":
-            Text_2_Image2()           
+            Text_2_Image2()
+        elif chat_type == 'Image to Image Overlaping System':
+            Image_2_Image_Overlaping()            
         elif chat_type == "Kisan Mitra Chatbot":
             Kisan_mitra_main()
         elif chat_type == "Application Tracking System":
