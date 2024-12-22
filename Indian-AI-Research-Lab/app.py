@@ -508,22 +508,6 @@ def Text_2_Image2():
       image.show()
       st.success("Done")
 
-def Text_2_Image3():
-    client = Client("multimodalart/FLUX.1-merged")
-    prompt = st.text_input("Enter your prompt:")
-    if st.button("Generate Image"):   
-     with st.spinner(text='Wait...I am generating image'):
-        image = client.predict(
-		prompt,
-		seed=0,
-		randomize_seed=True,
-		width=1024,
-		height=1024,
-		guidance_scale=3.5,
-		num_inference_steps=8,
-		api_name="/infer")
-    image.show()      
-
 def Image_2_Image_Overlaping1():
 
     from diffusers import DiffusionPipeline
