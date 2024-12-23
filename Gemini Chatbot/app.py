@@ -17,13 +17,11 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 import speech_recognition as sr
 import io
-#from google.cloud import aiplatform_v1beta1
-from PIL import Image
-#from vertexai.preview.vision_models import ImageGenerationModel
 from huggingface_hub import InferenceClient
-#from gradio_client import Client
-#from diffusers import DiffusionPipeline
-##Function to load the model and get the response
+from diffusers import AutoPipelineForInpainting
+from diffusers.utils import load_image   
+import torch
+    
 def get_gemini_response_t(question,prompt):
     model = GenerativeModel('gemini-pro')
     response = model.generate_content([question,prompt])
@@ -462,10 +460,10 @@ def ATS():
 
 def Text_2_Image():
     # Add a text input field for the user to enter the text
- text = st.text_input("Enter the text you want to generate an image for:")
+  text = st.text_input("Enter the text you want to generate an image for:")
 
  # Generate the image from the text
- if st.button("Generate"):
+  if st.button("Generate"):
     image = get_gemini_response_i(text,prompt="Create an image for given text")
       # Display the generated image
     st.image(image, caption="Generated image",use_column_width=True)
@@ -546,9 +544,6 @@ def Image_2_Image_Overlaping():
 
 
 def Image_2_video():
-    from diffusers import AutoPipelineForInpainting
-    from diffusers.utils import load_image   
-    import torch
     pipe = AutoPipelineForInpainting.from_pretrained("diffusers/stable-diffusion-xl-1.0-inpainting-0.1", torch_dtype=torch.float16, variant="fp16").to("cuda")
 
     img_url = "https://raw.githubusercontent.com/CompVis/latent-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png"
@@ -575,7 +570,6 @@ def main():
     try:
         load_dotenv()  # take environment variables from .env
         genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-        
         ##initialize our streamlit app
         st.set_page_config(page_title="Advanced Artificial Intelligence Brain")
         #st.subheader("Advanced Artificial Intelligence Brain")
