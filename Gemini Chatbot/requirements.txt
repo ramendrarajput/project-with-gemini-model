@@ -15,3 +15,7 @@ pygame
 langchain_google_genai
 speechrecognition
 langchain-community
+crewai
+huggingface_hub
+diffusers
+torch
