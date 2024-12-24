@@ -18,5 +18,4 @@ langchain-community
 crewai
 huggingface_hub
 diffusers
-diffusers.utils
 torch
